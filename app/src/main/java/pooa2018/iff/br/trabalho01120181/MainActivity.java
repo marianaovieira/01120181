@@ -21,15 +21,14 @@ public class MainActivity extends AppCompatActivity {
 
         txtArea = findViewById(R.id.txtResposta);
 
+        bOK.setOnClickListener(new View.OnClickListener(){
 
-        bOK.setOnClickListener(new View.OnClickListener() {
-
+            @Override
+            public void onClick(View v) {
+                calcular();
+            }
         }
-        @Override
-        public void onClick (View view){
-            calcular();
-        }
-        )
+        );
     }
 
         private void calcular(){

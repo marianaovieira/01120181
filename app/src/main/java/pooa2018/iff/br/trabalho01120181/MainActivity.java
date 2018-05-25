@@ -14,12 +14,16 @@ public class MainActivity extends AppCompatActivity {
     private Button bOK;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         txtArea = findViewById(R.id.txtResposta);
+        lPropostas = findViewById(R.id.lProposta);
+        bOK = findViewById(R.id.bOk);
 
         bOK.setOnClickListener(new View.OnClickListener(){
 
@@ -34,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         private void calcular(){
 
         double area = Float.parseFloat(txtArea.getText().toString());
-        double total_litros = 0, preco_L, preco_G;
-        int total_latas = 0, total_galoes = 0;
+        double total_litros, preco_L, preco_G, auxiliar, valor_total;
+        int total_latas, total_galoes;
 
         total_litros = area / 6;
 
@@ -46,15 +50,30 @@ public class MainActivity extends AppCompatActivity {
         preco_G = total_galoes * 25;
 
 
-        //Ifs de condicionamento
+        String msg1 = "Opção 1: A quantidade de latas de tinta utilizadas será de " + total_latas + " latas com preço total de R$" + preco_L + ". \n\nOpção 2: A quantidade de galões de tinta utilizados será de:" + total_galoes + " galões com preço total de R$" + preco_G;
 
 
+            auxiliar = area % 18;
 
-        String msg1 = "A quantidade de latas de tinta utilizadas serão" + total_latas + " com preço total de R$" + preco_L + ". \n A quantidade de galões de tinta utilizadas serão:" + total_galoes + " com preço total de R$" + preco_L;
-        String msg2 = " ";
-        int qtd_L, qtdG;
+            if(auxiliar == 0)
+                total_galoes = 0;
+            else {
+                total_galoes = (int) (auxiliar / 3.6);
 
-        lPropostas.setText((String.valueOf(msg1).concat(msg2)));
+                if(total_galoes == 0 || total_galoes * 3.6 < area)
+                    total_galoes++;
+
+                if(total_galoes * 25 > 80) {
+                    total_galoes = 0;
+                    total_latas++;
+                }
+            }
+
+            valor_total = (total_galoes * 25) + (total_latas * 80);
+
+            String msg2 = "\n \nOpção 3: A quantidade de latas de tinta será de "+total_latas+" e a de galões "+total_galoes+". O preço total será de R$"+valor_total;
+
+            lPropostas.setText((String.valueOf(msg1).concat(msg2)));
 
     }
 }
